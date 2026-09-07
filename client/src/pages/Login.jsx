@@ -1,13 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+import { login } from "../app/authSlice";
+import api from "../configs/api";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,12 +26,36 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      setLoading(true);
 
-    // Login API এখানে call করবে
+      const { data } = await api.post("/api/users/login", formData);
+
+      localStorage.setItem("token", data.token);
+
+      dispatch(
+        login({
+          token: data.token,
+          user: data.user,
+        })
+      );
+
+      toast.success("Login successful!");
+
+      navigate("/app");
+
+    } catch (error) {
+      console.log(error);
+
+      toast.error(
+        error.response?.data?.message || error.message
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,18 +64,16 @@ const Login = () => {
       <form
         onSubmit={handleSubmit}
         className="
-          relative
-          z-10
-          w-full
-          sm:w-87.5
+          relative z-10
+          w-full sm:w-87.5
           text-center
           bg-white/6
-          border
-          border-white/10
+          border border-white/10
           rounded-2xl
           px-8
         "
       >
+
         <h1 className="text-white text-3xl mt-10 font-medium">
           Login
         </h1>
@@ -56,17 +86,13 @@ const Login = () => {
         <div
           className="
             flex items-center
-            w-full
-            mt-6
+            w-full mt-6
             bg-white/5
-            ring-2
-            ring-white/10
+            ring-2 ring-white/10
             focus-within:ring-green-500/60
-            h-12
-            rounded-full
+            h-12 rounded-full
             overflow-hidden
-            pl-6
-            gap-2
+            pl-6 gap-2
             transition-all
           "
         >
@@ -111,14 +137,11 @@ const Login = () => {
             mt-4
             w-full
             bg-white/5
-            ring-2
-            ring-white/10
+            ring-2 ring-white/10
             focus-within:ring-green-500/60
-            h-12
-            rounded-full
+            h-12 rounded-full
             overflow-hidden
-            pl-6
-            gap-2
+            pl-6 gap-2
             transition-all
           "
         >
@@ -176,6 +199,7 @@ const Login = () => {
         {/* Login button */}
         <button
           type="submit"
+          disabled={loading}
           className="
             mt-4
             w-full
@@ -184,10 +208,12 @@ const Login = () => {
             text-white
             bg-green-600
             hover:bg-green-500
+            disabled:opacity-50
+            disabled:cursor-not-allowed
             transition
           "
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
 
         {/* Signup */}
@@ -201,10 +227,12 @@ const Login = () => {
             Sign up
           </Link>
         </p>
+
       </form>
 
       {/* Soft Backdrop */}
       <div className="fixed inset-0 -z-0 pointer-events-none">
+
         <div
           className="
             absolute
@@ -235,6 +263,7 @@ const Login = () => {
             blur-2xl
           "
         />
+
       </div>
 
     </div>

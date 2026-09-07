@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
-import { dummyResumeData } from "../assets/assets 4/assets";
+import api from "../configs/api";
 import ResumePreview from "./ResumePreview";
 
 const Preview = () => {
   const { resumeId } = useParams();
 
   const [resume, setResume] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadResume = async () => {
+    try {
+      setIsLoading(true);
+
+      const { data } = await api.get(
+        "/api/resumes/public/" + resumeId
+      );
+
+      setResume(data.resume);
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Something went wrong"
+      );
+
+      setResume(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const existingResume = dummyResumeData.find(
-      (item) => String(item._id) === String(resumeId)
-    );
-
-    if (existingResume) {
-      setResume(existingResume);
-      document.title = existingResume.title;
-    }
+    loadResume();
   }, [resumeId]);
+
+  // Loading
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-white animate-spin" />
+      </div>
+    );
+  }
 
   // Resume not found
   if (!resume) {
@@ -67,11 +93,9 @@ const Preview = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-
           <Link
             to="/"
             className="flex items-center gap-2 text-white hover:text-gray-300"
@@ -85,25 +109,19 @@ const Preview = () => {
           </h1>
 
           <div className="w-12" />
-
         </div>
       </header>
 
       {/* Resume */}
       <main className="py-10 px-4">
-
         <div className="max-w-4xl mx-auto bg-white shadow-2xl">
-
           <ResumePreview
             data={resume}
             template={resume.template}
             accentColor={resume.accent_color}
           />
-
         </div>
-
       </main>
-
     </div>
   );
 };

@@ -1,13 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import {logout} from'../app/authSlice'
 
 const NavBar = ({user}) => {
-  
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   function handleSignOut (){
 
 navigate('/')
+dispatch(logout())
 
   }
 
@@ -24,7 +27,7 @@ navigate('/')
 
 <div className='flex  text-white'>
 <p className='text-white mx-3 my-1.5 max-sm:hidden'>Hi , {user.name}</p>
-<button onClick={handleSignOut} className='border-2 rounded-full mx-2 px-3 py-1 hover:scale-105 transition-transform duration-200 text-green-600'>Log out</button>
+<button onClick={handleSignOut} d className='border-2 rounded-full mx-2 px-3 py-1 hover:scale-105 transition-transform duration-200 text-green-600'>Log out</button>
 
 
 </div>

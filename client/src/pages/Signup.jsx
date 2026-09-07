@@ -1,11 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../configs/api";
+import toast from "react-hot-toast";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
-    username:"",
+    username: "",
     email: "",
     password: "",
   });
@@ -19,12 +21,26 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const { data } = await api.post("/api/users/register", {
+        name: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
 
-    // Login API এখানে call করবে
+      localStorage.setItem("token", data.token);
+
+      toast.success(data.message);
+
+      navigate("/app");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
   };
 
   return (
@@ -46,14 +62,15 @@ const Login = () => {
         "
       >
         <h1 className="text-white text-3xl mt-10 font-medium">
-        Signup
+          Signup
         </h1>
 
         <p className="text-gray-400 text-sm mt-2">
           Please Register to continue
         </p>
-{/* username */}
- <div
+
+        {/* Username */}
+        <div
           className="
             flex items-center
             w-full
@@ -70,9 +87,8 @@ const Login = () => {
             transition-all
           "
         >
-         
           <input
-            type="username"
+            type="text"
             name="username"
             placeholder="Enter your username"
             className="
@@ -88,9 +104,6 @@ const Login = () => {
             required
           />
         </div>
-
-
-
 
         {/* Email */}
         <div
@@ -213,7 +226,7 @@ const Login = () => {
           </button>
         </div>
 
-        {/* Login button */}
+        {/* Signup button */}
         <button
           type="submit"
           className="
@@ -230,7 +243,7 @@ const Login = () => {
           SignUp
         </button>
 
-        {/* Signup */}
+        {/* Login */}
         <p className="text-gray-400 text-sm mt-3 mb-11">
           Already have an account?
 
@@ -281,4 +294,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
