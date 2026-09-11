@@ -39,9 +39,9 @@ const Dashboard = () => {
   const [editResume, setEditResume] = useState(null);
   const [deleteResume, setDeleteResume] = useState(null);
 
-  // =========================
+  
   // Get All Resumes
-  // =========================
+  
 
   const loadAllResumes = async () => {
     try {
@@ -61,9 +61,9 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
+
   // Create Resume
-  // =========================
+
 
   const createResume = async (event) => {
     event.preventDefault();
@@ -107,9 +107,9 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
+
   // Upload Resume
-  // =========================
+
 
   const uploadResume = async (event) => {
     event.preventDefault();
@@ -179,9 +179,10 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
+  
   // Open Edit Modal
-  // =========================
+  
+  
 
   const handleEdit = (resume) => {
     setEditResume(resume);
@@ -189,9 +190,9 @@ const Dashboard = () => {
     setShowEditResume(true);
   };
 
-  // =========================
+  
   // Update Resume
-  // =========================
+  
 
   const updateResume = async (event) => {
     event.preventDefault();
@@ -253,18 +254,18 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
+  
   // Open Delete Modal
-  // =========================
+  
 
   const handleDelete = (resume) => {
     setDeleteResume(resume);
     setShowDeleteModal(true);
   };
 
-  // =========================
+  
   // Delete Resume
-  // =========================
+  
 
   const confirmDeleteResume = async () => {
     if (!deleteResume) return;
@@ -304,9 +305,9 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
+  
   // Load Resumes
-  // =========================
+  
 
   useEffect(() => {
     if (token) {
@@ -318,9 +319,9 @@ const Dashboard = () => {
     <div className="min-h-screen bg-black">
       <div className="mx-auto max-w-7xl px-4 py-10">
 
-        {/* ========================= */}
+        
         {/* Header */}
-        {/* ========================= */}
+
 
         <div className="mb-10">
           <p
@@ -342,9 +343,9 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* ========================= */}
+        
         {/* Create & Upload */}
-        {/* ========================= */}
+        
 
         <div className="flex flex-wrap gap-4 mb-10">
 
@@ -430,9 +431,9 @@ const Dashboard = () => {
           </button>
         </div>
 
-        {/* ========================= */}
+        
         {/* Resume Heading */}
-        {/* ========================= */}
+        
 
         <div className="flex items-center gap-3 mb-6">
           <FileTextIcon className="size-4 text-slate-400" />
@@ -444,9 +445,9 @@ const Dashboard = () => {
           <hr className="flex-1 border-slate-700" />
         </div>
 
-        {/* ========================= */}
+        
         {/* Resume Cards */}
-        {/* ========================= */}
+        
 
         {allResumes.length === 0 ? (
           <p className="text-slate-500 text-sm">
@@ -588,9 +589,9 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* ================================================= */}
+      
       {/* Create Resume Modal */}
-      {/* ================================================= */}
+      
 
       {showCreateResumes && (
         <form
@@ -665,9 +666,9 @@ const Dashboard = () => {
         </form>
       )}
 
-      {/* ================================================= */}
+      
       {/* Upload Resume Modal */}
-      {/* ================================================= */}
+      
 
       {showUploadResumes && (
         <form
@@ -840,9 +841,9 @@ const Dashboard = () => {
         </form>
       )}
 
-      {/* ================================================= */}
+
       {/* Edit Resume Modal */}
-      {/* ================================================= */}
+      
 
       {showEditResume && (
         <form
@@ -946,9 +947,9 @@ const Dashboard = () => {
         </form>
       )}
 
-      {/* ================================================= */}
+      
       {/* Delete Resume Modal */}
-      {/* ================================================= */}
+      
 
       {showDeleteModal && (
         <div
