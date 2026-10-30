@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import { useDispatch } from "react-redux";
 import { login, setLoading } from "./app/authSlice";
 import { Toaster } from "react-hot-toast";
+import Chatbot from "./components/Chatbot";
 
 const App = () => {
 
@@ -56,6 +57,7 @@ useEffect(
   return (
     <div>
       <Toaster/>
+      <Chatbot />
       <Routes>
 
         {/* Home */}
