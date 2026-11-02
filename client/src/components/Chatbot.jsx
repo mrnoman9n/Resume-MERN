@@ -37,7 +37,7 @@ const Chatbot = () => {
       }
 
       const response = await fetch(
-        "https://favorite-silicon-aside-bruce.trycloudflare.com/webhook/540fd741-fb9e-455d-a214-7299729ffc6d",
+        "https://normal-because-becomes-cst.trycloudflare.com/webhook/540fd741-fb9e-455d-a214-7299729ffc6d",
         {
           method: "POST",
           headers: {
