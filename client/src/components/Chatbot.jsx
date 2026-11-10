@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Send, Bot } from "lucide-react";
 
 const WEBHOOK_URL =
-  "https://bernard-department-compare-deals.trycloudflare.com/webhook/540fd741-fb9e-455d-a214-7299729ffc6d";
+  "https://faq-submission-everybody-paso.trycloudflare.com/webhook/540fd741-fb9e-455d-a214-7299729ffc6d";
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
